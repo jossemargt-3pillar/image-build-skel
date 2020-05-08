@@ -21,7 +21,10 @@ sudo make install
 ```
 
 ```sh
-docker run --rm -v $PWD:$PWD -w $PWD rancher/image-build-skel:v0.1.0 rancher/fips-image-build-flannel
+docker run --rm                \
+    -v $PWD:$PWD -w $PWD       \
+    --user "$(id -u):$(id -g)" \
+    rancher/image-build-skel:v0.1.0 rancher/fips-image-build-flannel
 ```
 
 ## License
