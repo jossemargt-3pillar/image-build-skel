@@ -1,0 +1,13 @@
+*.o
+*.so
+*.dylib
+
+.vscode
+
+bin/
+tmp/
+
+*.out
+*.*.out
+
+image-build-skel
