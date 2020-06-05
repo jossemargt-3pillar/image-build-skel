@@ -2,6 +2,10 @@ package main
 
 const makefileTemplate = `SEVERITIES = HIGH,CRITICAL
 
+ifeq ($(TAG),)
+TAG = dev
+endif
+
 .PHONY: all
 all:
 	docker build --build-arg TAG=$(TAG) -t %s:$(TAG) .
@@ -30,7 +34,7 @@ platform:
 
 steps:
 - name: build
-  image: briandowns/rancher-build-base:v0.1.1
+  image: ranchertest/build-base:v1.14.2
   volumes:
   - name: docker
     path: /var/run
@@ -42,7 +46,7 @@ steps:
     - tag
 
 - name: push
-  image: briandowns/rancher-build-base:v0.1.1
+  image: ranchertest/build-base:v1.14.2
   volumes:
   - name: docker
     path: /var/run
@@ -59,7 +63,7 @@ steps:
     - tag
 
 - name: scan
-  image: briandowns/rancher-build-base:v0.1.1
+  image: ranchertest/build-base:v1.14.2
   volumes:
   - name: docker
     path: /var/run
@@ -70,7 +74,7 @@ steps:
     - tag
 
 - name: manifest
-  image: briandowns/rancher-build-base:v0.1.1
+  image: ranchertest/build-base:v1.14.2
   volumes:
   - name: docker
     path: /var/run
@@ -94,7 +98,7 @@ volumes:
 `
 
 const dockerfileTemplate = `ARG UBI_IMAGE=registry.access.redhat.com/ubi7/ubi-minimal:latest
-ARG GO_IMAGE=briandowns/rancher-build-base:v0.1.1
+ARG GO_IMAGE=ranchertest/build-base:v1.14.2
 
 FROM ${UBI_IMAGE} as ubi
 

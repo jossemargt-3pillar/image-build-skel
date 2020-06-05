@@ -1,6 +1,6 @@
 # Image Builder Skel
 
-This repository contains a utility that generates a git repository with all of the files necessary to build a Rancher k8s upstream dependency.
+This repository contains a utility that generates a git repository with all of the files necessary to build a Rancher Kubernetes upstream dependency.
 
 ## Build
 
@@ -24,7 +24,7 @@ sudo make install
 docker run --rm                \
     -v $PWD:$PWD -w $PWD       \
     --user "$(id -u):$(id -g)" \
-    rancher/image-build-skel:v0.1.0 rancher/fips-image-build-flannel
+    rancher/image-build-skel:v1.14.2 ranchertest/image-build-component
 ```
 
 ## License
@@ -41,3 +41,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+

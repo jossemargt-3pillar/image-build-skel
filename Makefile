@@ -5,7 +5,7 @@ BINDIR = bin
 BINARY = image-build-skel
 
 VERSION = v0.1.0
-PREFIX = /usr/local
+PREFIX  = /usr/local
 
 $(BINDIR)/$(BINARY): $(BINDIR) clean
 	$(GO) build -v -o $@
@@ -23,21 +23,21 @@ uninstall:
 
 .PHONY: image-build
 image-build:
-	$(DOCKER) build -t briandowns/$(BINARY):$(VERSION) .
+	$(DOCKER) build -t ranchertest/$(BINARY):$(VERSION) .
 
 .PHONY: image-push
 image-push:
-	$(DOCKER) push briandowns/$(BINARY):$(VERSION)
+	$(DOCKER) push ranchertest/$(BINARY):$(VERSION)
 
 .PHONY: scan
 image-scan:
-	trivy --severity $(SEVERITIES) --no-progress --skip-update --ignore-unfixed briandowns/$(BINARY):$(TAG)
+	trivy --severity $(SEVERITIES) --no-progress --skip-update --ignore-unfixed ranchertest/$(BINARY):$(VERSION)
 
 .PHONY: image-manifest
 image-manifest:
-	docker image inspect briandowns/$(BINARY):$(VERSION)
-	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create briandowns/$(BINARY):$(VERSION) \
-		$(shell docker image inspect briandowns/$(BINARY):$(VERSION) | jq -r '.[] | .RepoDigests[0]')
+	docker image inspect ranchertest/$(BINARY):$(VERSION)
+	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create ranchertest/$(BINARY):$(VERSION) \
+		$(shell docker image inspect ranchertest/$(BINARY):$(VERSION) | jq -r '.[] | .RepoDigests[0]')
 
 .PHONY: clean
 clean:
@@ -45,3 +45,4 @@ clean:
 	rm -f $(BINDIR)/*
 	rm -rf tmp/* tmp/.drone.yml
 	rm -f *.out
+

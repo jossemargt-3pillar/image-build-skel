@@ -1,5 +1,5 @@
 ARG UBI_IMAGE=registry.access.redhat.com/ubi7/ubi-minimal:latest
-ARG GO_IMAGE=briandowns/rancher-build-base:v0.1.1
+ARG GO_IMAGE=ranchertest/build-base:v1.14.2
 
 FROM ${UBI_IMAGE} as ubi
 
@@ -20,3 +20,4 @@ RUN microdnf update -y   && \
 COPY --from=builder /go/bin/image-build-skel /usr/local/bin
 
 ENTRYPOINT ["image-build-skel"]
+
