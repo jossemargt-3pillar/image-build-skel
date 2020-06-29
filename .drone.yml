@@ -12,6 +12,7 @@ steps:
   - name: dockersock
     path: /var/run
   commands:
+  # wait for docker availability
   - sleep 20
   - make
   when:
