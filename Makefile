@@ -23,21 +23,21 @@ uninstall:
 
 .PHONY: image-build
 image-build:
-	$(DOCKER) build -t ranchertest/$(BINARY):$(VERSION) .
+	$(DOCKER) build -t rancher/hardened-$(BINARY):$(VERSION) .
 
 .PHONY: image-push
 image-push:
-	$(DOCKER) push ranchertest/$(BINARY):$(VERSION)
+	$(DOCKER) push rancher/hardened-$(BINARY):$(VERSION)
 
 .PHONY: scan
 image-scan:
-	trivy --severity $(SEVERITIES) --no-progress --skip-update --ignore-unfixed ranchertest/$(BINARY):$(VERSION)
+	trivy --severity $(SEVERITIES) --no-progress --skip-update --ignore-unfixed rancher/hardened-$(BINARY):$(VERSION)
 
 .PHONY: image-manifest
 image-manifest:
-	docker image inspect ranchertest/$(BINARY):$(VERSION)
-	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create ranchertest/$(BINARY):$(VERSION) \
-		$(shell docker image inspect ranchertest/$(BINARY):$(VERSION) | jq -r '.[] | .RepoDigests[0]')
+	docker image inspect rancher/hardened-$(BINARY):$(VERSION)
+	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create rancher/hardened-$(BINARY):$(VERSION) \
+		$(shell docker image inspect rancher/hardened-$(BINARY):$(VERSION) | jq -r '.[] | .RepoDigests[0]')
 
 .PHONY: clean
 clean:
