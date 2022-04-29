@@ -1,7 +1,7 @@
-ARG UBI_IMAGE=registry.access.redhat.com/ubi7/ubi-minimal:latest
+ARG BCI_IMAGE=registry.suse.com/bci/bci-base:latest
 ARG GO_IMAGE=ranchertest/hardened-build-base:v1.14.2
 
-FROM ${UBI_IMAGE} as ubi
+FROM ${BCI_IMAGE} as bci
 
 FROM ${GO_IMAGE} as builder
 RUN apt update     && \ 
@@ -12,10 +12,10 @@ COPY . .
 
 RUN rm -f go.mod && \make
 
-FROM ubi
-RUN microdnf update -y   && \
-    microdnf install git &&\
-    rm -rf /var/cache/yum
+FROM bci
+RUN zypper update -y && \
+    zypper install -y git &&\
+    zypper clean --all
 
 COPY --from=builder /go/bin/image-build-skel /usr/local/bin
 
